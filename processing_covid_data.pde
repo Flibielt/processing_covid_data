@@ -27,15 +27,13 @@ void loadCountries() {
       if (shape != null) {
         Country country = new Country(row.getString("Country"), code, row.getString("Alpha-3_code"), shape);
         
-        countries.put(code, country);
-        if (code.equals("MK")){
-          println("asd"); //<>//
-        }
+        countries.put(code, country); //<>//
       }
   }
 }
 
 void draw() {
+  background(255);
   fill(255);
   shape(map, svgX, svgY);
   
