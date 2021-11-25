@@ -1,11 +1,18 @@
+import java.text.SimpleDateFormat;  
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Date;
+
 PShape map, hungary;
 int svgX, svgY;
 HashMap<String, Country> countries;
+List<CovidData> covidDatas;
 
 void setup() {
-  size(1024, 800);
-  svgX = 280;
-  svgY = 40;
+  //size(1024, 800);
+  fullScreen();
+  svgX = 10;
+  svgY = 10;
   
   map = loadShape("countries_of_europe.svg");
   map.disableStyle();
@@ -14,6 +21,36 @@ void setup() {
   background(255);
   
   loadCountries();
+  loadCovidData();
+}
+
+void loadCovidData() {
+  Table covidDataTable = loadTable("owid-covid-data-europe.csv", "header");
+  try {
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
+    covidDatas = new ArrayList();
+
+    for (TableRow row : covidDataTable.rows()) {
+      CovidData covidData = new CovidData();
+      Date date = simpleDateFormat.parse(row.getString("date"));
+
+      covidData.setCountryName(row.getString("location"));
+      covidData.setCountryCode(row.getString("iso_code"));
+      covidData.setDate(date);
+      covidData.setTotalCaseCount(row.getInt("total_cases"));
+      covidData.setCaseCount(row.getInt("new_cases"));
+      covidData.setTotalDeathCount(row.getInt("total_deaths"));
+      covidData.setDeathCount(row.getInt("new_deaths"));
+      covidData.setTotalTestCount(row.getInt("total_tests"));
+      covidData.setTestCount(row.getInt("new_tests"));
+      
+      covidDatas.add(covidData);
+    }
+  } catch (Exception e) {
+    println("Error while reading Covid data");
+    println(e);
+  }
+  
 }
 
 void loadCountries() {
