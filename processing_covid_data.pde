@@ -1,12 +1,13 @@
 import java.text.SimpleDateFormat;  
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Date;
 
 PShape map, hungary;
 int svgX, svgY;
 HashMap<String, Country> countries;
-List<CovidData> covidDatas;
+HashMap<String, List<CovidData>> countryCovidData;
 
 void setup() {
   //size(1024, 800);
@@ -26,11 +27,19 @@ void setup() {
 
 void loadCovidData() {
   Table covidDataTable = loadTable("owid-covid-data-europe.csv", "header");
+  countryCovidData = new HashMap();
+
   try {
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
-    covidDatas = new ArrayList();
 
     for (TableRow row : covidDataTable.rows()) {
+      String countryCode = row.getString("iso_code");
+
+      if (!countryCovidData.containsKey(countryCode)) {
+        List<CovidData> covidDatas = new ArrayList();
+        countryCovidData.put(countryCode, covidDatas);
+      }
+
       CovidData covidData = new CovidData();
       Date date = simpleDateFormat.parse(row.getString("date"));
 
@@ -43,8 +52,8 @@ void loadCovidData() {
       covidData.setDeathCount(row.getInt("new_deaths"));
       covidData.setTotalTestCount(row.getInt("total_tests"));
       covidData.setTestCount(row.getInt("new_tests"));
-      
-      covidDatas.add(covidData);
+
+      countryCovidData.get(countryCode).add(covidData);
     }
   } catch (Exception e) {
     println("Error while reading Covid data");
