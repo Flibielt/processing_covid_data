@@ -31,6 +31,18 @@ class CovidData {
     this.testCount = testCount;
   }
 
+  public void updateMaxData() {
+      if (caseCount > dataMax) {
+          dataMax = caseCount;
+      }
+      if (deathCount > dataMax) {
+          dataMax = deathCount;
+      }
+      if (testCount > dataMax) {
+          dataMax = testCount;
+      }
+  }
+
   public String getCountryName() {
     return countryName;
   }
