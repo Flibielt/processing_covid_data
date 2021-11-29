@@ -9,6 +9,10 @@ int svgX, svgY;
 HashMap<String, Country> countries;
 HashMap<String, List<CovidData>> countryCovidData;
 
+int dataRows;
+int dayInterval = 10;
+int volumeInterval = 10;
+
 void setup() {
   //size(1024, 800);
   fullScreen();
