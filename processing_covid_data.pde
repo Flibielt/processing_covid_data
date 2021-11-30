@@ -6,12 +6,12 @@ import java.util.Date;
 
 PShape map, hungary;
 int svgX, svgY;
+int defaultDistance = 20;
 HashMap<String, Country> countries;
 HashMap<String, List<CovidData>> countryCovidData;
 DataVisualization dataVisualization;
 
 int rowCount;
-int dataMin, dataMax;
 int dayMin, dayMax;
 int dayInterval = 10;
 int volumeInterval = 20;
@@ -19,9 +19,8 @@ int volumeIntervalMinor = 5;
 
 void setup() {
   fullScreen();
-  svgX = 10;
-  svgY = 10;
-  dataMin = 0;
+  svgX = defaultDistance;
+  svgY = defaultDistance;
   
   map = loadShape("countries_of_europe.svg");
   map.disableStyle();
@@ -31,8 +30,13 @@ void setup() {
   
   loadCountries();
   loadCovidData();
+  
+  float plotX1 = svgX + map.width + 75;
+  float plotY1 = svgY;
+  float plotX2 = width - defaultDistance;
+  float plotY2 = height - plotY1 - 100;
 
-  dataVisualization = new DataVisualization(200, 200, 1500, 1500);
+  dataVisualization = new DataVisualization(plotX1, plotY1, plotX2, plotY2);
 }
 
 void draw() {
@@ -51,6 +55,7 @@ void draw() {
     }
   }
 
+  dataVisualization.findMaxData("HUN", DataType.CASE_COUNT);
   dataVisualization.drawTimeLabel("HUN");
   dataVisualization.drawVolumeLabel();
   dataVisualization.drawDataCurve("HUN", DataType.CASE_COUNT);

@@ -25,7 +25,6 @@ void loadCovidData() {
       covidData.setDeathCount(row.getInt("new_deaths"));
       covidData.setTotalTestCount(row.getInt("total_tests"));
       covidData.setTestCount(row.getInt("new_tests"));
-      covidData.updateMaxData();
 
       countryCovidData.get(countryCode).add(covidData);
     }

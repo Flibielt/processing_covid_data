@@ -2,69 +2,92 @@ import java.text.SimpleDateFormat;
 import java.text.DateFormat;
 
 class DataVisualization {
-  private int plotX1;
-  private int plotX2;
-  private int plotY1;
-  private int plotY2;
+  private int dataMax;
+  private int dataMin = 0;
+  private float plotX1;
+  private float plotX2;
+  private float plotY1;
+  private float plotY2;
   private DateFormat dateFormat;
 
   public DataVisualization() {
-    dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+    dateFormat = new SimpleDateFormat("yyyy.mm.dd");
   }
 
-  public DataVisualization(int plotX1, int plotY1, int plotX2, int plotY2) {
+  public DataVisualization(float plotX1, float plotY1, float plotX2, float plotY2) {
     this.plotX1 = plotX1;
     this.plotY1 = plotY1;
     this.plotX2 = plotX2;
     this.plotY2 = plotY2;
 
-    dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+    dateFormat = new SimpleDateFormat("yyyy.mm.dd");
   }
 
-  public void setPlotX1(int plotX1) {
+  public void setPlotX1(float plotX1) {
     this.plotX1 = plotX1;
   }
 
-  public int getPlotX1() {
+  public float getPlotX1() {
     return plotX1;
   }
 
-  public void setPlotY1(int plotY1) {
+  public void setPlotY1(float plotY1) {
     this.plotY1 = plotY1;
   }
 
-  public int getPlotY1() {
+  public float getPlotY1() {
     return plotY1;
   }
 
-  public void setPlotX2(int plotX2) {
+  public void setPlotX2(float plotX2) {
     this.plotX2 = plotX2;
   }
 
-  public int getPlotX2() {
+  public float getPlotX2() {
     return plotX2;
   }
 
-  public void setPlotY2(int plotY2) {
+  public void setPlotY2(float plotY2) {
     this.plotY2 = plotY2;
   }
 
-  public int getPlotY2() {
+  public float getPlotY2() {
     return plotY2;
+  }
+
+  public void findMaxData(String countryCode, DataType dataType) {
+    List<CovidData> covidDataList = countryCovidData.get(countryCode);
+
+    for (CovidData covidData : covidDataList) {
+      if (dataType == DataType.CASE_COUNT) {
+        if (dataMax < covidData.getCaseCount()) {
+          dataMax = covidData.getCaseCount();
+        }
+      } else if (dataType == DataType.DEATH_COUNT) {
+        if (dataMax < covidData.getDeathCount()) {
+          dataMax = covidData.getDeathCount();
+        }
+      } else if (dataType == DataType.TEST_COUNT) {
+        if (dataMax < covidData.getTestCount()) {
+          dataMax = covidData.getTestCount();
+        }
+      }
+    }
   }
 
   public void drawTimeLabel(String countryCode) {
     List<CovidData> covidData = countryCovidData.get(countryCode);
+    rowCount = covidData.size();
     fill(0);
     textSize(10);
     textAlign(CENTER);
 
-    // Use thin, gray lines to draw the grid
+    // Use thin, gray lines to draw the grid //<>//
     stroke(224);
     strokeWeight(1);
 
     for (int row = 0; row < rowCount; row++) { //<>//
-      if (row % rowCount == 0) {
+      if (row % 75 == 0) {
         float x = map(row, 0, rowCount, plotX1, plotX2);
         String dateStr = dateFormat.format(covidData.get(row).getDate());
         text(dateStr, x, plotY2 + textAscent() + 10); //<>//
@@ -80,9 +103,13 @@ class DataVisualization {
 
     stroke(128);
     strokeWeight(1);
-
+    
+    //volumeIntervalMinor = int(dataMax / (plotY2 - plotY1)) / 1000; //<>//
+    
+    volumeIntervalMinor = 100; 
+    
     for (float v = dataMin; v <= dataMax; v += volumeIntervalMinor) {
-      if (v % volumeIntervalMinor == 0) {     // If a tick mark
+      if (v % 2500 == 0) {     // If a tick mark
         float y = map(v, dataMin, dataMax, plotY2, plotY1);  
         if (v % volumeInterval == 0) {        // If a major tick mark
           float textOffset = textAscent()/2;  // Center vertically
