@@ -8,12 +8,13 @@ PShape map, hungary;
 int svgX, svgY;
 HashMap<String, Country> countries;
 HashMap<String, List<CovidData>> countryCovidData;
+DataVisualization dataVisualization;
 
 int rowCount;
 int dataMin, dataMax;
 int dayMin, dayMax;
 int dayInterval = 10;
-int volumeInterval = 10;
+int volumeInterval = 20;
 int volumeIntervalMinor = 5;
 
 void setup() {
@@ -30,6 +31,8 @@ void setup() {
   
   loadCountries();
   loadCovidData();
+
+  dataVisualization = new DataVisualization(200, 200, 1500, 1500);
 }
 
 void draw() {
@@ -47,5 +50,9 @@ void draw() {
       text(country.getName(), mouseX, mouseY);
     }
   }
+
+  dataVisualization.drawTimeLabel("HUN");
+  dataVisualization.drawVolumeLabel();
+  dataVisualization.drawDataCurve("HUN", DataType.CASE_COUNT);
 
 }

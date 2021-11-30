@@ -63,19 +63,70 @@ class DataVisualization {
     stroke(224);
     strokeWeight(1);
 
-    for (int row = 0; row < dataRows; row++) {
-      if (row % dataRows == 0) {
-        float x = map(row, 0, dataRows, plotX1, plotX2);
+    for (int row = 0; row < rowCount; row++) { //<>//
+      if (row % rowCount == 0) {
+        float x = map(row, 0, rowCount, plotX1, plotX2);
         String dateStr = dateFormat.format(covidData.get(row).getDate());
-        text(dateStr, x, plotY2 + textAscent() + 10);
+        text(dateStr, x, plotY2 + textAscent() + 10); //<>//
         line(x, plotY1, x, plotY2);
       }
     }
   }
 
   public void drawVolumeLabel() {
+    fill(0);
+    textSize(10);
+    textAlign(RIGHT);
+
+    stroke(128);
+    strokeWeight(1);
+
+    for (float v = dataMin; v <= dataMax; v += volumeIntervalMinor) {
+      if (v % volumeIntervalMinor == 0) {     // If a tick mark
+        float y = map(v, dataMin, dataMax, plotY2, plotY1);  
+        if (v % volumeInterval == 0) {        // If a major tick mark
+          float textOffset = textAscent()/2;  // Center vertically
+          if (v == dataMin) {
+            textOffset = 0;                   // Align by the bottom
+          } else if (v == dataMax) {
+            textOffset = textAscent();        // Align by the top
+          }
+          text(floor(v), plotX1 - 10, y + textOffset);
+          line(plotX1 - 4, y, plotX1, y);     // Draw major tick
+        } else {
+          //line(plotX1 - 2, y, plotX1, y);     // Draw minor tick
+        }
+      }
+    }
   }
 
-  public void drawDataCurve() {
+  public void drawDataCurve(String countryCode, DataType dataType) {
+    List<CovidData> covidData = countryCovidData.get(countryCode);
+
+    beginShape();
+    
+    for (int row = 0; row < rowCount; row++) {
+      float value = 0;
+      if (dataType == DataType.CASE_COUNT) {
+        value = covidData.get(row).getCaseCount();
+      } else if (dataType == DataType.DEATH_COUNT) {
+        value = covidData.get(row).getDeathCount();
+      } else if (dataType == DataType.TEST_COUNT) {
+        value = covidData.get(row).getTestCount();
+      }
+
+      // TODO: Set dayMin and dayMax
+      // float x = map(row, dayMin, dayMax, plotX1, plotX2);
+      float x = map(row, 0, rowCount, plotX1, plotX2);
+      float y = map(value, dataMin, dataMax, plotY2, plotY1);
+      
+      curveVertex(x, y);
+      // double the curve points for the start and stop
+      if ((row == 0) || (row == rowCount-1)) {
+        curveVertex(x, y);
+      }
+    }
+
+    endShape();
   }
 }
