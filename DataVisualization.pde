@@ -8,6 +8,7 @@ class DataVisualization {
   private float plotX2;
   private float plotY1;
   private float plotY2;
+  private float previousValue = 0.0;
   private String countryCode;
   private DataType dataType;
   private DateFormat dateFormat;
@@ -157,26 +158,22 @@ class DataVisualization {
       } else if (dataType == DataType.TEST_COUNT) {
         value = covidData.get(row).getTestCount();
       }
-
-      // TODO: Set dayMin and dayMax
-      // float x = map(row, dayMin, dayMax, plotX1, plotX2);
+      
+      // Manage missing data
+      if (row > 0 && value <= 0 && previousValue > (dataMax / 40)) {
+        value = previousValue * 0.9;
+      }
       
       float x = map(row, 0, covidData.size(), plotX1, plotX2);
       float y = map(value, dataMin, dataMax, plotY2, plotY1);
-      
-      if (row > 600) {
-        println("Row: " + row + ", X: " + x + ", Y: " + y);
-      }
-      
-      if (y < plotY1) {
-       println(value); 
-      }
       
       curveVertex(x, y);
       // double the curve points for the start and stop
       if ((row == 0) || (row == covidData.size()-1)) {
         curveVertex(x, y);
       }
+
+      previousValue = value;
     }
 
     endShape();
