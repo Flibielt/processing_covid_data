@@ -8,6 +8,8 @@ class DataVisualization {
   private float plotX2;
   private float plotY1;
   private float plotY2;
+  private String countryCode;
+  private DataType dataType;
   private DateFormat dateFormat;
 
   public DataVisualization() {
@@ -55,7 +57,19 @@ class DataVisualization {
     return plotY2;
   }
 
-  public void findMaxData(String countryCode, DataType dataType) {
+  public void setCountryCode(String countryCode) {
+    this.countryCode = countryCode;
+  }
+
+  public String getCountryCode() {
+    return countryCode;
+  }
+
+  public void setDataType(DataType dataType) {
+    this.dataType = dataType;
+  }
+
+  public void findMaxData() {
     List<CovidData> covidDataList = countryCovidData.get(countryCode);
 
     for (CovidData covidData : covidDataList) {
@@ -75,22 +89,22 @@ class DataVisualization {
     }
   }
 
-  public void drawTimeLabel(String countryCode) {
+  public void drawTimeLabel() {
     List<CovidData> covidData = countryCovidData.get(countryCode);
     rowCount = covidData.size();
     fill(0);
     textSize(10);
     textAlign(CENTER);
 
-    // Use thin, gray lines to draw the grid //<>//
+    // Use thin, gray lines to draw the grid
     stroke(224);
     strokeWeight(1);
 
-    for (int row = 0; row < rowCount; row++) { //<>//
+    for (int row = 0; row < rowCount; row++) {
       if (row % 75 == 0) {
         float x = map(row, 0, rowCount, plotX1, plotX2);
         String dateStr = dateFormat.format(covidData.get(row).getDate());
-        text(dateStr, x, plotY2 + textAscent() + 10); //<>//
+        text(dateStr, x, plotY2 + textAscent() + 10);
         line(x, plotY1, x, plotY2);
       }
     }
@@ -100,11 +114,11 @@ class DataVisualization {
     fill(0);
     textSize(10);
     textAlign(RIGHT);
-
+    
     stroke(128);
     strokeWeight(1);
-    
-    //volumeIntervalMinor = int(dataMax / (plotY2 - plotY1)) / 1000; //<>//
+      
+    //volumeIntervalMinor = int(dataMax / (plotY2 - plotY1)) / 1000;
     
     volumeIntervalMinor = 100; 
     
@@ -126,13 +140,15 @@ class DataVisualization {
       }
     }
   }
-
-  public void drawDataCurve(String countryCode, DataType dataType) {
+  
+  public void drawDataCurve() {
     List<CovidData> covidData = countryCovidData.get(countryCode);
+    
+    noFill();
 
     beginShape();
     
-    for (int row = 0; row < rowCount; row++) {
+    for (int row = 0; row < covidData.size(); row++) {
       float value = 0;
       if (dataType == DataType.CASE_COUNT) {
         value = covidData.get(row).getCaseCount();
@@ -144,12 +160,21 @@ class DataVisualization {
 
       // TODO: Set dayMin and dayMax
       // float x = map(row, dayMin, dayMax, plotX1, plotX2);
-      float x = map(row, 0, rowCount, plotX1, plotX2);
+      
+      float x = map(row, 0, covidData.size(), plotX1, plotX2);
       float y = map(value, dataMin, dataMax, plotY2, plotY1);
+      
+      if (row > 600) {
+        println("Row: " + row + ", X: " + x + ", Y: " + y);
+      }
+      
+      if (y < plotY1) {
+       println(value); 
+      }
       
       curveVertex(x, y);
       // double the curve points for the start and stop
-      if ((row == 0) || (row == rowCount-1)) {
+      if ((row == 0) || (row == covidData.size()-1)) {
         curveVertex(x, y);
       }
     }

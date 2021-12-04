@@ -55,9 +55,12 @@ void draw() {
     }
   }
 
-  dataVisualization.findMaxData("HUN", DataType.CASE_COUNT);
-  dataVisualization.drawTimeLabel("HUN");
+  dataVisualization.setCountryCode("HUN");
+  dataVisualization.setDataType(DataType.CASE_COUNT);
+  dataVisualization.findMaxData();
+  dataVisualization.drawTimeLabel();
   dataVisualization.drawVolumeLabel();
-  dataVisualization.drawDataCurve("HUN", DataType.CASE_COUNT);
+  dataVisualization.drawDataCurve();
+  
 
 }
