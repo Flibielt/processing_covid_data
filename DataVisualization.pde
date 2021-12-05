@@ -151,17 +151,12 @@ class DataVisualization {
     
     for (int row = 0; row < covidData.size(); row++) {
       float value = 0;
-      if (dataType == DataType.CASE_COUNT) {
-        value = covidData.get(row).getCaseCount();
-      } else if (dataType == DataType.DEATH_COUNT) {
-        value = covidData.get(row).getDeathCount();
-      } else if (dataType == DataType.TEST_COUNT) {
-        value = covidData.get(row).getTestCount();
-      }
+      value = covidData.get(row).getData(dataType);
       
       // Manage missing data
       if (row > 0 && value <= 0 && previousValue > (dataMax / 40)) {
-        value = previousValue * 0.9;
+        value = previousValue;
+        covidData.get(row).setData(dataType, value);
       }
       
       float x = map(row, 0, covidData.size(), plotX1, plotX2);

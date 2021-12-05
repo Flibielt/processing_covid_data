@@ -103,4 +103,27 @@ class CovidData {
     this.testCount = testCount;
   }
 
+  public float getData(DataType dataType) {
+    int value = -1;
+    if (dataType == DataType.CASE_COUNT) {
+      value = getCaseCount();
+    } else if (dataType == DataType.DEATH_COUNT) {
+      value = getDeathCount();
+    } else if (dataType == DataType.TEST_COUNT) {
+      value = getTestCount();
+    }
+
+    return value;
+  }
+
+  public void setData(DataType dataType, float data) {
+    if (dataType == DataType.CASE_COUNT) {
+      setCaseCount(int(data));
+    } else if (dataType == DataType.DEATH_COUNT) {
+      setDeathCount(int(data));
+    } else if (dataType == DataType.TEST_COUNT) {
+      setTestCount(int(data));
+    }
+  }
+
 }
