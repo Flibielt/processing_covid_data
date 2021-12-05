@@ -4,16 +4,15 @@ import java.text.DateFormat;
 class DataVisualization {
   private int dataMax;
   private int dataMin = 0;
-  private float plotX1;
-  private float plotX2;
-  private float plotY1;
-  private float plotY2;
   private float previousValue = 0.0;
-  private String countryCode;
+  private float plotX1, plotX2, plotY1, plotY2;
+  private Set<String> countryCodes;
+
   private DataType dataType;
   private DateFormat dateFormat;
 
   public DataVisualization() {
+    countryCodes = new HashSet();
     dateFormat = new SimpleDateFormat("yyyy.mm.dd");
   }
 
@@ -23,6 +22,7 @@ class DataVisualization {
     this.plotX2 = plotX2;
     this.plotY2 = plotY2;
 
+    countryCodes = new HashSet();
     dateFormat = new SimpleDateFormat("yyyy.mm.dd");
   }
 
@@ -58,12 +58,16 @@ class DataVisualization {
     return plotY2;
   }
 
-  public void setCountryCode(String countryCode) {
-    this.countryCode = countryCode;
+  public void addCountry(String countryCode) {
+    countryCodes.add(countryCode);
   }
 
-  public String getCountryCode() {
-    return countryCode;
+  public void removeCountry(String countryCode) {
+    countryCodes.remove(countryCode);
+  }
+
+  public Set<String> getCountryCodes() {
+    return countryCodes;
   }
 
   public void setDataType(DataType dataType) {
@@ -71,7 +75,17 @@ class DataVisualization {
   }
 
   public void findMaxData() {
+    for (String countryCode : countryCodes) {
+      findMaxData(countryCode);
+    }
+  }
+
+  private void findMaxData(String countryCode) {
     List<CovidData> covidDataList = countryCovidData.get(countryCode);
+
+    if (covidDataList == null) {
+      return;
+    }
 
     for (CovidData covidData : covidDataList) {
       if (dataType == DataType.CASE_COUNT) {
@@ -91,7 +105,14 @@ class DataVisualization {
   }
 
   public void drawTimeLabel() {
+    String countryCode;
+    countryCode = countryCodes.iterator().next();
     List<CovidData> covidData = countryCovidData.get(countryCode);
+
+    if (covidData == null) {
+      return;
+    }
+
     rowCount = covidData.size();
     fill(0);
     textSize(10);
@@ -143,7 +164,17 @@ class DataVisualization {
   }
   
   public void drawDataCurve() {
+    for (String countryCode : countryCodes) {
+      drawDataCurve(countryCode);
+    }
+  }
+
+  private void drawDataCurve(String countryCode) {
     List<CovidData> covidData = countryCovidData.get(countryCode);
+
+    if (covidData == null) {
+      return;
+    }
     
     noFill();
 

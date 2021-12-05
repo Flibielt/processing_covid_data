@@ -50,10 +50,12 @@ void mouseClicked() {
     Country country = countries.get(code);
 
     if (country.isMouseOver()) {
-      if (selectedCountries.contains(code)) {
-        selectedCountries.remove(code);
+      if (selectedCountries.contains(country.getAlphaCode3())) {
+        selectedCountries.remove(country.getAlphaCode3());
+        dataVisualization.removeCountry(country.getAlphaCode3());
       } else {
-        selectedCountries.add(code);
+        selectedCountries.add(country.getAlphaCode3());
+        dataVisualization.addCountry(country.getAlphaCode3());
       }
     }
   }
@@ -75,12 +77,11 @@ void draw() {
     }
   }
 
-  dataVisualization.setCountryCode("HUN");
-  dataVisualization.setDataType(DataType.CASE_COUNT);
-  dataVisualization.findMaxData();
-  dataVisualization.drawTimeLabel();
-  dataVisualization.drawVolumeLabel();
-  dataVisualization.drawDataCurve();
-  
-
+  if (selectedCountries.size() > 0) {
+    dataVisualization.setDataType(DataType.CASE_COUNT);
+    dataVisualization.findMaxData();
+    dataVisualization.drawTimeLabel();
+    dataVisualization.drawVolumeLabel();
+    dataVisualization.drawDataCurve();
+  }
 }
