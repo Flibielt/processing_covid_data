@@ -1,14 +1,19 @@
 import java.text.SimpleDateFormat;  
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Date;
+import java.util.Set;
 
 PShape map, hungary;
 int svgX, svgY;
 int defaultDistance = 20;
 HashMap<String, Country> countries;
 HashMap<String, List<CovidData>> countryCovidData;
+Set<String> selectedCountries;
+
+// Visualizing the data
 DataVisualization dataVisualization;
 
 int rowCount;
@@ -36,7 +41,22 @@ void setup() {
   float plotX2 = width - defaultDistance;
   float plotY2 = height - plotY1 - 100;
 
+  selectedCountries = new HashSet();
   dataVisualization = new DataVisualization(plotX1, plotY1, plotX2, plotY2);
+}
+
+void mouseClicked() {
+  for (String code : countries.keySet()) {
+    Country country = countries.get(code);
+
+    if (country.isMouseOver()) {
+      if (selectedCountries.contains(code)) {
+        selectedCountries.remove(code);
+      } else {
+        selectedCountries.add(code);
+      }
+    }
+  }
 }
 
 void draw() {
