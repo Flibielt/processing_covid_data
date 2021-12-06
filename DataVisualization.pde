@@ -76,15 +76,8 @@ class DataVisualization {
   }
 
   public void drawTimeLabel() {
-    String countryCode;
-    countryCode = countryCodes.iterator().next();
-    List<CovidData> covidData = countryCovidData.get(countryCode);
+    long daysBetween = getDaysBetween(dateMin, dateMax);
 
-    if (covidData == null) {
-      return;
-    }
-
-    rowCount = covidData.size();
     fill(0);
     textSize(10);
     textAlign(CENTER);
@@ -93,11 +86,11 @@ class DataVisualization {
     stroke(224);
     strokeWeight(1);
 
-    for (int row = 0; row < rowCount; row++) {
-      if (row % 75 == 0) {
-        float x = map(row, 0, rowCount, plotX1, plotX2);
-        String dateStr = covidData.get(row).getDate().toString();
-        text(dateStr, x, plotY2 + textAscent() + 10);
+    for (int day = 0; day < daysBetween; day++) {
+      if (day % 75 == 0) {
+        float x = map(day, 0, daysBetween, plotX1, plotX2);
+        LocalDate date = dateMin.plusDays(day);
+        text(date.toString(), x, plotY2 + textAscent() + 10);
         line(x, plotY1, x, plotY2);
       }
     }
