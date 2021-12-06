@@ -3,7 +3,6 @@ void loadCovidData() {
   countryCovidData = new HashMap();
 
   try {
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
 
     for (TableRow row : covidDataTable.rows()) {
       String countryCode = row.getString("iso_code");
@@ -14,7 +13,7 @@ void loadCovidData() {
       }
 
       CovidData covidData = new CovidData();
-      Date date = simpleDateFormat.parse(row.getString("date"));
+      LocalDate date = LocalDate.parse(row.getString("date"), formatter);
 
       covidData.setCountryName(row.getString("location"));
       covidData.setCountryCode(row.getString("iso_code"));

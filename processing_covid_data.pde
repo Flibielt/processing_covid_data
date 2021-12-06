@@ -1,17 +1,26 @@
-import java.text.SimpleDateFormat;  
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Date;
 import java.util.Set;
+import java.util.Date;
+import java.time.Period;
+import java.util.concurrent.TimeUnit;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
+import java.time.format.DateTimeFormatter;
 
+boolean first = true;
 PShape map, hungary;
 int svgX, svgY;
 int defaultDistance = 20;
 HashMap<String, Country> countries;
 HashMap<String, List<CovidData>> countryCovidData;
 Set<String> selectedCountries;
+SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
 // Visualizing the data
 DataVisualization dataVisualization;

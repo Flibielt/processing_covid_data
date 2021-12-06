@@ -1,19 +1,21 @@
-import java.text.SimpleDateFormat;
-import java.text.DateFormat;
-
 class DataVisualization {
-  private int dataMax;
-  private int dataMin = 0;
+  private int dataMin = 0, dataMax;
+  private LocalDate dateMin = LocalDate.now(), dateMax, startDate;
   private float previousValue = 0.0;
   private float plotX1, plotX2, plotY1, plotY2;
   private Set<String> countryCodes;
 
   private DataType dataType;
-  private DateFormat dateFormat;
 
   public DataVisualization() {
     countryCodes = new HashSet();
-    dateFormat = new SimpleDateFormat("yyyy.mm.dd");
+
+    try {
+      startDate = LocalDate.parse("2018-01-01");
+      dateMax = LocalDate.parse("2000-01-01");
+    } catch (Exception e) {
+      println(e.getMessage());
+    }
   }
 
   public DataVisualization(float plotX1, float plotY1, float plotX2, float plotY2) {
@@ -23,7 +25,13 @@ class DataVisualization {
     this.plotY2 = plotY2;
 
     countryCodes = new HashSet();
-    dateFormat = new SimpleDateFormat("yyyy.mm.dd");
+
+    try {
+      startDate = LocalDate.parse("2018-01-01");
+      dateMax = LocalDate.parse("2000-01-01");
+    } catch (Exception e) {
+      println(e.getMessage());
+    }
   }
 
   public void setPlotX1(float plotX1) {
@@ -70,6 +78,10 @@ class DataVisualization {
     return countryCodes;
   }
 
+  public void updateBorders() {
+    findMaxData();
+  }
+
   public void setDataType(DataType dataType) {
     this.dataType = dataType;
   }
@@ -85,6 +97,14 @@ class DataVisualization {
 
     if (covidDataList == null) {
       return;
+    }
+
+    if (covidDataList.get(0).getDate().isBefore(dateMin)) {
+      dateMin = covidDataList.get(0).getDate();
+    }
+
+    if (covidDataList.get(covidDataList.size() - 1).getDate().isAfter(dateMax)) {
+      dateMax = covidDataList.get(covidDataList.size() - 1).getDate();
     }
 
     for (CovidData covidData : covidDataList) {
@@ -125,7 +145,7 @@ class DataVisualization {
     for (int row = 0; row < rowCount; row++) {
       if (row % 75 == 0) {
         float x = map(row, 0, rowCount, plotX1, plotX2);
-        String dateStr = dateFormat.format(covidData.get(row).getDate());
+        String dateStr = covidData.get(row).getDate().toString();
         text(dateStr, x, plotY2 + textAscent() + 10);
         line(x, plotY1, x, plotY2);
       }
@@ -171,13 +191,16 @@ class DataVisualization {
 
   private void drawDataCurve(String countryCode) {
     List<CovidData> covidData = countryCovidData.get(countryCode);
+    long dateMinDays, dateMaxDays, currentDays;
 
     if (covidData == null) {
       return;
     }
+
+    dateMinDays = getDaysBetween(startDate, dateMin);
+    dateMaxDays = getDaysBetween(startDate, dateMax);
     
     noFill();
-
     beginShape();
     
     for (int row = 0; row < covidData.size(); row++) {
@@ -190,7 +213,9 @@ class DataVisualization {
         covidData.get(row).setData(dataType, value);
       }
       
-      float x = map(row, 0, covidData.size(), plotX1, plotX2);
+      // currentDays = TimeUnit.DAYS.convert(covidData.get(row).getDate().getTime() - startDate.getTime(), TimeUnit.MILLISECONDS);
+      currentDays = getDaysBetween(startDate, covidData.get(row).getDate());
+      float x = map(currentDays, dateMinDays, dateMaxDays, plotX1, plotX2);
       float y = map(value, dataMin, dataMax, plotY2, plotY1);
       
       curveVertex(x, y);
@@ -203,5 +228,6 @@ class DataVisualization {
     }
 
     endShape();
+    first = false;
   }
 }

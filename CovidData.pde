@@ -1,10 +1,8 @@
-import java.util.Date;
-
 class CovidData {
 
   private String countryName;
   private String countryCode;
-  private Date date;
+  private LocalDate date;
 
   private int totalCaseCount;
   private int caseCount;
@@ -18,7 +16,7 @@ class CovidData {
   public CovidData() {
   }
 
-  public CovidData(String countryName, String countryCode, Date date, int totalCaseCount, int caseCount, 
+  public CovidData(String countryName, String countryCode, LocalDate date, int totalCaseCount, int caseCount, 
   int totalDeathCount, int deathCount, int totalTestCount, int testCount) {
     this.countryName = countryName;
     this.countryCode = countryCode;
@@ -47,11 +45,11 @@ class CovidData {
     this.countryCode = countryCode;
   }
   
-  public Date getDate() {
+  public LocalDate getDate() {
     return date;
   }
   
-  public void setDate(Date date) {
+  public void setDate(LocalDate date) {
     this.date = date;
   }
   
