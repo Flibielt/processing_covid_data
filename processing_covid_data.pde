@@ -1,34 +1,27 @@
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.Date;
-import java.time.Period;
-import java.util.concurrent.TimeUnit;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.time.format.DateTimeFormatter;
 
-boolean first = true;
-PShape map, hungary;
-int svgX, svgY;
-int defaultDistance = 20;
+PShape map;
+Set<String> selectedCountries;
 HashMap<String, Country> countries;
 HashMap<String, List<CovidData>> countryCovidData;
-Set<String> selectedCountries;
-SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
 // Visualizing the data
 DataVisualization dataVisualization;
 
 int rowCount;
+int svgX, svgY;
 int dayMin, dayMax;
 int dayInterval = 10;
 int volumeInterval = 20;
+int defaultDistance = 20;
 int volumeIntervalMinor = 5;
 
 void setup() {
@@ -39,7 +32,6 @@ void setup() {
   map = loadShape("countries_of_europe.svg");
   map.disableStyle();
   
-  hungary = map.getChild("hu");
   background(255);
   
   loadCountries();
@@ -88,7 +80,6 @@ void draw() {
 
   if (selectedCountries.size() > 0) {
     dataVisualization.setDataType(DataType.CASE_COUNT);
-    dataVisualization.findMaxData();
     dataVisualization.drawTimeLabel();
     dataVisualization.drawVolumeLabel();
     dataVisualization.drawDataCurve();

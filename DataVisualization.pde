@@ -7,65 +7,6 @@ class DataVisualization {
 
   private DataType dataType;
 
-  public DataVisualization() {
-    countryCodes = new HashSet();
-
-    try {
-      startDate = LocalDate.parse("2018-01-01");
-      dateMax = LocalDate.parse("2000-01-01");
-    } catch (Exception e) {
-      println(e.getMessage());
-    }
-  }
-
-  public DataVisualization(float plotX1, float plotY1, float plotX2, float plotY2) {
-    this.plotX1 = plotX1;
-    this.plotY1 = plotY1;
-    this.plotX2 = plotX2;
-    this.plotY2 = plotY2;
-
-    countryCodes = new HashSet();
-
-    try {
-      startDate = LocalDate.parse("2018-01-01");
-      dateMax = LocalDate.parse("2000-01-01");
-    } catch (Exception e) {
-      println(e.getMessage());
-    }
-  }
-
-  public void setPlotX1(float plotX1) {
-    this.plotX1 = plotX1;
-  }
-
-  public float getPlotX1() {
-    return plotX1;
-  }
-
-  public void setPlotY1(float plotY1) {
-    this.plotY1 = plotY1;
-  }
-
-  public float getPlotY1() {
-    return plotY1;
-  }
-
-  public void setPlotX2(float plotX2) {
-    this.plotX2 = plotX2;
-  }
-
-  public float getPlotX2() {
-    return plotX2;
-  }
-
-  public void setPlotY2(float plotY2) {
-    this.plotY2 = plotY2;
-  }
-
-  public float getPlotY2() {
-    return plotY2;
-  }
-
   public void addCountry(String countryCode) {
     countryCodes.add(countryCode);
     resetMaxData();
@@ -90,12 +31,10 @@ class DataVisualization {
     return countryCodes;
   }
 
-  public void updateBorders() {
-    findMaxData();
-  }
-
   public void setDataType(DataType dataType) {
     this.dataType = dataType;
+    resetMaxData();
+    findMaxData();
   }
 
   public void findMaxData() {
@@ -240,6 +179,64 @@ class DataVisualization {
     }
 
     endShape();
-    first = false;
+  }
+
+  public DataVisualization() {
+    countryCodes = new HashSet();
+
+    try {
+      startDate = LocalDate.parse("2018-01-01");
+      dateMax = LocalDate.parse("2000-01-01");
+    } catch (Exception e) {
+      println(e.getMessage());
+    }
+  }
+
+  public DataVisualization(float plotX1, float plotY1, float plotX2, float plotY2) {
+    this.plotX1 = plotX1;
+    this.plotY1 = plotY1;
+    this.plotX2 = plotX2;
+    this.plotY2 = plotY2;
+
+    countryCodes = new HashSet();
+
+    try {
+      startDate = LocalDate.parse("2018-01-01");
+      dateMax = LocalDate.parse("2000-01-01");
+    } catch (Exception e) {
+      println(e.getMessage());
+    }
+  }
+
+  public void setPlotX1(float plotX1) {
+    this.plotX1 = plotX1;
+  }
+
+  public float getPlotX1() {
+    return plotX1;
+  }
+
+  public void setPlotY1(float plotY1) {
+    this.plotY1 = plotY1;
+  }
+
+  public float getPlotY1() {
+    return plotY1;
+  }
+
+  public void setPlotX2(float plotX2) {
+    this.plotX2 = plotX2;
+  }
+
+  public float getPlotX2() {
+    return plotX2;
+  }
+
+  public void setPlotY2(float plotY2) {
+    this.plotY2 = plotY2;
+  }
+
+  public float getPlotY2() {
+    return plotY2;
   }
 }
