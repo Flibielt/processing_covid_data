@@ -68,10 +68,22 @@ class DataVisualization {
 
   public void addCountry(String countryCode) {
     countryCodes.add(countryCode);
+    resetMaxData();
+    findMaxData();
   }
 
   public void removeCountry(String countryCode) {
     countryCodes.remove(countryCode);
+    resetMaxData();
+    findMaxData();
+  }
+
+  private void resetMaxData() {
+    dataMin = 0;
+    dataMax = 0;
+    dateMin = LocalDate.now();
+    startDate = LocalDate.parse("2018-01-01");
+    dateMax = LocalDate.parse("2000-01-01");
   }
 
   public Set<String> getCountryCodes() {
