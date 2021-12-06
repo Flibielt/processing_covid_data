@@ -82,10 +82,6 @@ class DataVisualization {
     textSize(10);
     textAlign(CENTER);
 
-    // Use thin, gray lines to draw the grid
-    stroke(224);
-    strokeWeight(1);
-
     for (int day = 0; day < daysBetween; day++) {
       if (day % 75 == 0) {
         float x = map(day, 0, daysBetween, plotX1, plotX2);
@@ -100,11 +96,6 @@ class DataVisualization {
     fill(0);
     textSize(10);
     textAlign(RIGHT);
-    
-    stroke(128);
-    strokeWeight(1);
-      
-    //volumeIntervalMinor = int(dataMax / (plotY2 - plotY1)) / 1000;
     
     volumeIntervalMinor = 100; 
     
