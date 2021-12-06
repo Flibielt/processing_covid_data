@@ -12,6 +12,7 @@ Set<String> selectedCountries;
 HashMap<String, Country> countries;
 HashMap<String, List<CovidData>> countryCovidData;
 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+DataType[] dataTypes = {DataType.CASE_COUNT, DataType.DEATH_COUNT, DataType.TEST_COUNT};
 
 // Visualizing the data
 DataVisualization dataVisualization;
@@ -23,6 +24,12 @@ int dayInterval = 10;
 int volumeInterval = 20;
 int defaultDistance = 20;
 int volumeIntervalMinor = 5;
+
+float tabPad = 10;
+int currentColumn = 0;
+float tabTop, tabBottom;
+float[] tabLeft, tabRight;
+float plotX1, plotX2, plotY1, plotY2;
 
 void setup() {
   fullScreen();
@@ -37,26 +44,21 @@ void setup() {
   loadCountries();
   loadCovidData();
   
-  float plotX1 = svgX + map.width + 75;
-  float plotY1 = svgY;
-  float plotX2 = width - defaultDistance;
-  float plotY2 = height - plotY1 - 100;
+  plotX1 = svgX + map.width + 75;
+  plotY1 = svgY + 50;
+  plotX2 = width - defaultDistance;
+  plotY2 = height - plotY1 - 100;
 
   selectedCountries = new HashSet();
   dataVisualization = new DataVisualization(plotX1, plotY1, plotX2, plotY2);
 }
 
 void mouseClicked() {
-  for (String code : countries.keySet()) {
-    Country country = countries.get(code);
-
-    if (country.isMouseOver()) {
-      if (selectedCountries.contains(country.getAlphaCode3())) {
-        selectedCountries.remove(country.getAlphaCode3());
-        dataVisualization.removeCountry(country.getAlphaCode3());
-      } else {
-        selectedCountries.add(country.getAlphaCode3());
-        dataVisualization.addCountry(country.getAlphaCode3());
+  checkClickOnMap();
+  if (mouseY > tabTop && mouseY < tabBottom) {
+    for (int col = 0; col < dataTypes.length; col++) {
+      if (mouseX > tabLeft[col] && mouseX < tabRight[col]) {
+        currentColumn = col;
       }
     }
   }
@@ -83,5 +85,7 @@ void draw() {
     dataVisualization.drawTimeLabel();
     dataVisualization.drawVolumeLabel();
     dataVisualization.drawDataCurve();
+
+    drawTitleTabs();
   }
 }
