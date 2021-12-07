@@ -18,6 +18,17 @@ void checkClickOnMap() {
   }
 }
 
+void checkClickOnDataTypes() {
+  if (mouseY > tabTop && mouseY < tabBottom) {
+    for (int col = 0; col < dataTypes.length; col++) {
+      if (mouseX > tabLeft[col] && mouseX < tabRight[col]) {
+        currentColumn = col;
+        dataVisualization.setDataType(dataTypes[currentColumn]);
+      }
+    }
+  }
+}
+
 void drawTitleTabs() {
   rectMode(CORNERS);
   //noStroke();
