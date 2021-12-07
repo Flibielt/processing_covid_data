@@ -3,6 +3,7 @@ class Country {
   private String alphaCode2;
   private String alphaCode3;
   private PShape shape;
+  private color countryColor;
 
   public Country() {
   }
@@ -48,6 +49,14 @@ class Country {
 
   public PShape getShape() {
     return shape;
+  }
+
+  public void setColor(color c) {
+    this.countryColor = c;
+  }
+
+  public color getColor() {
+    return countryColor;
   }
 
 }
