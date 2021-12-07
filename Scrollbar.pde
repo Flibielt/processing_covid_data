@@ -61,8 +61,10 @@ class HScrollbar {
   }
 
   void display() {
+    rectMode(CORNER);
     noStroke();
     fill(204);
+    println(sheight);
     rect(xpos, ypos, swidth, sheight);
     if (over || locked) {
       fill(0, 0, 0);

@@ -16,6 +16,7 @@ DataType[] dataTypes = {DataType.CASE_COUNT, DataType.DEATH_COUNT, DataType.TEST
 
 // Visualizing the data
 DataVisualization dataVisualization;
+HScrollbar hs1;
 
 int rowCount;
 int svgX, svgY;
@@ -52,6 +53,8 @@ void setup() {
   selectedCountries = new HashSet();
   dataVisualization = new DataVisualization(plotX1, plotY1, plotX2, plotY2);
   dataVisualization.setDataType(dataTypes[0]);
+
+  hs1 = new HScrollbar(0, height - 100, 200, 16, 1);
 }
 
 void mouseClicked() {
@@ -61,6 +64,10 @@ void mouseClicked() {
 
 void draw() {
   background(255);
+
+  hs1.update();
+  hs1.display();
+
   fill(255);
   shape(map, svgX, svgY);
   textSize(12);
