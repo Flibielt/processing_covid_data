@@ -31,11 +31,14 @@ int currentColumn = 0;
 float tabTop, tabBottom;
 float[] tabLeft, tabRight;
 float plotX1, plotX2, plotY1, plotY2;
+LocalDate globalMinDate, globalMaxDate;
 
 void setup() {
   fullScreen();
   svgX = defaultDistance;
   svgY = defaultDistance;
+  globalMinDate = LocalDate.parse("3000-01-01", formatter);
+  globalMaxDate = LocalDate.parse("2000-01-01", formatter);
   
   map = loadShape("countries_of_europe.svg");
   map.disableStyle();
@@ -54,7 +57,7 @@ void setup() {
   dataVisualization = new DataVisualization(plotX1, plotY1, plotX2, plotY2);
   dataVisualization.setDataType(dataTypes[0]);
 
-  hs1 = new HScrollbar(0, height - 100, 200, 16, 1);
+  hs1 = new HScrollbar(20, height - 100, int(map.width), 16, 1);
 }
 
 void mouseClicked() {

@@ -15,6 +15,12 @@ void loadCovidData() {
       CovidData covidData = new CovidData();
       LocalDate date = LocalDate.parse(row.getString("date"), formatter);
 
+      if (date.isAfter(globalMaxDate)) {
+        globalMaxDate = date;
+      } else if (date.isBefore(globalMinDate)) {
+        globalMinDate = date;
+      }
+
       covidData.setCountryName(row.getString("location"));
       covidData.setCountryCode(row.getString("iso_code"));
       covidData.setDate(date);

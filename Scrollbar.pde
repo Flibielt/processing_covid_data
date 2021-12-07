@@ -64,7 +64,6 @@ class HScrollbar {
     rectMode(CORNER);
     noStroke();
     fill(204);
-    println(sheight);
     rect(xpos, ypos, swidth, sheight);
     if (over || locked) {
       fill(0, 0, 0);
@@ -72,6 +71,15 @@ class HScrollbar {
       fill(102, 102, 102);
     }
     rect(spos, ypos, sheight, sheight);
+
+    fill(0);
+    textSize(15);
+    textAlign(LEFT);
+    text(globalMinDate.toString(), xpos, ypos + sheight + 20);
+
+    textAlign(RIGHT);
+    text(globalMaxDate.toString(), xpos + swidth, ypos + sheight + 20);
+
     stroke(0);
   }
 

@@ -139,7 +139,6 @@ class DataVisualization {
     }
 
     if (covidData == null || country == null) {
-      println("asd");
       return;
     }
 
