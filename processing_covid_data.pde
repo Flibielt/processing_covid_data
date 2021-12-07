@@ -74,6 +74,12 @@ void draw() {
       fill(0);
       text(country.getName(), mouseX, mouseY);
     }
+
+    if (selectedCountries.contains(country.getAlphaCode3())) {
+      fill(country.getColor());
+      shape(country.getShape(), svgX, svgY);
+      fill(255);
+    }
   }
 
   if (selectedCountries.size() > 0) {

@@ -81,6 +81,7 @@ class DataVisualization {
     fill(0);
     textSize(10);
     textAlign(CENTER);
+    stroke(224);
 
     for (int day = 0; day < daysBetween; day++) {
       if (day % 75 == 0) {
@@ -90,6 +91,8 @@ class DataVisualization {
         line(x, plotY1, x, plotY2);
       }
     }
+
+    stroke(0);
   }
 
   public void drawVolumeLabel() {
@@ -98,6 +101,7 @@ class DataVisualization {
     fill(0);
     textSize(10);
     textAlign(RIGHT);
+    stroke(224);
     
     volumeIntervalMinor = dataMax / 5; 
 
@@ -112,6 +116,8 @@ class DataVisualization {
       text(floor(v), plotX1 - 10, y + textOffset);
       line(plotX1 - 4, y, plotX1, y);     // Draw major tick
     }
+
+    stroke(0);
   }
   
   public void drawDataCurve() {
@@ -123,8 +129,17 @@ class DataVisualization {
   private void drawDataCurve(String countryCode) {
     List<CovidData> covidData = countryCovidData.get(countryCode);
     long dateMinDays, dateMaxDays, currentDays;
+    Country country = null;
 
-    if (covidData == null) {
+    for (Country c : countries.values()) {
+      if (c.getAlphaCode3().equals(countryCode)) {
+        country = c;
+        break;
+      }
+    }
+
+    if (covidData == null || country == null) {
+      println("asd");
       return;
     }
 
@@ -132,6 +147,7 @@ class DataVisualization {
     dateMaxDays = getDaysBetween(startDate, dateMax);
     
     noFill();
+    stroke(country.getColor());
     beginShape();
     
     for (int row = 0; row < covidData.size(); row++) {
@@ -159,6 +175,7 @@ class DataVisualization {
     }
 
     endShape();
+    stroke(0);
   }
 
   public DataVisualization() {
