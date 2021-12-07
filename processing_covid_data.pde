@@ -51,6 +51,7 @@ void setup() {
 
   selectedCountries = new HashSet();
   dataVisualization = new DataVisualization(plotX1, plotY1, plotX2, plotY2);
+  dataVisualization.setDataType(dataTypes[0]);
 }
 
 void mouseClicked() {
@@ -59,6 +60,7 @@ void mouseClicked() {
     for (int col = 0; col < dataTypes.length; col++) {
       if (mouseX > tabLeft[col] && mouseX < tabRight[col]) {
         currentColumn = col;
+        dataVisualization.setDataType(dataTypes[currentColumn]);
       }
     }
   }
@@ -68,6 +70,7 @@ void draw() {
   background(255);
   fill(255);
   shape(map, svgX, svgY);
+  textSize(12);
   
   for (String code : countries.keySet()) {
     Country country = countries.get(code);
@@ -81,7 +84,6 @@ void draw() {
   }
 
   if (selectedCountries.size() > 0) {
-    dataVisualization.setDataType(DataType.CASE_COUNT);
     dataVisualization.drawTimeLabel();
     dataVisualization.drawVolumeLabel();
     dataVisualization.drawDataCurve();

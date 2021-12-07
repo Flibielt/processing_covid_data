@@ -93,28 +93,24 @@ class DataVisualization {
   }
 
   public void drawVolumeLabel() {
+    int tickMark;
+    float y;
     fill(0);
     textSize(10);
     textAlign(RIGHT);
     
-    volumeIntervalMinor = 100; 
-    
+    volumeIntervalMinor = dataMax / 5; 
+
     for (float v = dataMin; v <= dataMax; v += volumeIntervalMinor) {
-      if (v % 2500 == 0) {     // If a tick mark
-        float y = map(v, dataMin, dataMax, plotY2, plotY1);  
-        if (v % volumeInterval == 0) {        // If a major tick mark
-          float textOffset = textAscent()/2;  // Center vertically
-          if (v == dataMin) {
-            textOffset = 0;                   // Align by the bottom
-          } else if (v == dataMax) {
-            textOffset = textAscent();        // Align by the top
-          }
-          text(floor(v), plotX1 - 10, y + textOffset);
-          line(plotX1 - 4, y, plotX1, y);     // Draw major tick
-        } else {
-          //line(plotX1 - 2, y, plotX1, y);     // Draw minor tick
-        }
+      y = map(v, dataMin, dataMax, plotY2, plotY1);  
+      float textOffset = textAscent() / 2;  // Center vertically
+      if (v == dataMin) {
+        textOffset = 0;                   // Align by the bottom
+      } else if (v == dataMax) {
+        textOffset = textAscent();        // Align by the top
       }
+      text(floor(v), plotX1 - 10, y + textOffset);
+      line(plotX1 - 4, y, plotX1, y);     // Draw major tick
     }
   }
   
