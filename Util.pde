@@ -28,6 +28,7 @@ void checkClickOnDataTypes() {
       if (mouseX > tabLeft[col] && mouseX < tabRight[col]) {
         currentColumn = col;
         dataVisualization.setDataType(dataTypes[currentColumn]);
+        dataType = dataTypes[currentColumn];
       }
     }
   }

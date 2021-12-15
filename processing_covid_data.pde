@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.stream.Collectors;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.time.format.DateTimeFormatter;
@@ -31,6 +33,7 @@ int defaultDistance = 20;
 int volumeIntervalMinor = 5;
 
 boolean heatmap;
+DataType dataType = DataType.CASE_COUNT;
 float tabPad = 10;
 int currentColumn = 0;
 float tabTop, tabBottom;
@@ -109,5 +112,5 @@ void draw() {
 
   dataVisualization.drawCountryNamesWithColor();
   drawCheckBox();
-  displayTop5();
+  displaytopCountries();
 }
