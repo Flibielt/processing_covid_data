@@ -1,7 +1,7 @@
 float checkBoxX1, checkBoxY1, checkBoxwidth;
 
 void drawCheckBox() {
-    checkBoxX1 = svgX + 20;
+    checkBoxX1 = svgX;
     checkBoxY1 = svgY + map.height + 20;
 
     checkBoxwidth = 20;
