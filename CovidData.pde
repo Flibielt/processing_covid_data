@@ -4,20 +4,20 @@ class CovidData {
   private String countryCode;
   private LocalDate date;
 
-  private int totalCaseCount;
-  private int caseCount;
+  private Integer totalCaseCount;
+  private Integer caseCount;
 
-  private int totalDeathCount;
-  private int deathCount;
+  private Integer totalDeathCount;
+  private Integer deathCount;
 
-  private int totalTestCount;
-  private int testCount;
+  private Integer totalTestCount;
+  private Integer testCount;
 
   public CovidData() {
   }
 
-  public CovidData(String countryName, String countryCode, LocalDate date, int totalCaseCount, int caseCount, 
-  int totalDeathCount, int deathCount, int totalTestCount, int testCount) {
+  public CovidData(String countryName, String countryCode, LocalDate date, Integer totalCaseCount, Integer caseCount, 
+  Integer totalDeathCount, Integer deathCount, Integer totalTestCount, Integer testCount) {
     this.countryName = countryName;
     this.countryCode = countryCode;
     this.date = date;
@@ -53,7 +53,7 @@ class CovidData {
     this.date = date;
   }
   
-  public int getTotalCaseCount() {
+  public Integer getTotalCaseCount() {
     return totalCaseCount;
   }
   
@@ -61,7 +61,7 @@ class CovidData {
     this.totalCaseCount = totalCaseCount;
   }
   
-  public int getCaseCount() {
+  public Integer getCaseCount() {
     return caseCount;
   }
   
@@ -69,7 +69,7 @@ class CovidData {
     this.caseCount = caseCount;
   }
   
-  public int getTotalDeathCount() {
+  public Integer getTotalDeathCount() {
     return totalDeathCount;
   }
   
@@ -77,7 +77,7 @@ class CovidData {
     this.totalDeathCount = totalDeathCount;
   }
   
-  public int getDeathCount() {
+  public Integer getDeathCount() {
     return deathCount;
   }
   
@@ -85,7 +85,7 @@ class CovidData {
     this.deathCount = deathCount;
   }
   
-  public int getTotalTestCount() {
+  public Integer getTotalTestCount() {
     return totalTestCount;
   }
   
@@ -93,7 +93,7 @@ class CovidData {
     this.totalTestCount = totalTestCount;
   }
   
-  public int getTestCount() {
+  public Integer getTestCount() {
     return testCount;
   }
   
@@ -102,7 +102,7 @@ class CovidData {
   }
 
   public float getData(DataType dataType) {
-    int value = -1;
+    Integer value = -1;
     if (dataType == DataType.CASE_COUNT) {
       value = getCaseCount();
     } else if (dataType == DataType.DEATH_COUNT) {
