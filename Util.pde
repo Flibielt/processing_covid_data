@@ -7,14 +7,16 @@ void checkClickOnMap() {
     Country country = countries.get(code);
 
     if (country.isMouseOver()) {
-      if (selectedCountries.contains(country.getAlphaCode3())) {
-        selectedCountries.remove(country.getAlphaCode3());
-        dataVisualization.removeCountry(country.getAlphaCode3());
-        country.setColor(color(255, 255, 255));
-      } else {
-        selectedCountries.add(country.getAlphaCode3());
-        dataVisualization.addCountry(country.getAlphaCode3());
-        country.setColor(color(random(255), random(255), random(255)));
+      if (countryCovidData.containsKey(country.getAlphaCode3())) {
+        if (selectedCountries.contains(country.getAlphaCode3())) {
+          selectedCountries.remove(country.getAlphaCode3());
+          dataVisualization.removeCountry(country.getAlphaCode3());
+          country.setColor(color(255, 255, 255));
+        } else {
+          selectedCountries.add(country.getAlphaCode3());
+          dataVisualization.addCountry(country.getAlphaCode3());
+          country.setColor(color(random(255), random(255), random(255)));
+        }
       }
     }
   }
