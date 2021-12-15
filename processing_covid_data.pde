@@ -28,6 +28,7 @@ int volumeInterval = 20;
 int defaultDistance = 20;
 int volumeIntervalMinor = 5;
 
+boolean heatmap;
 float tabPad = 10;
 int currentColumn = 0;
 float tabTop, tabBottom;
@@ -67,6 +68,7 @@ void setup() {
 void mouseClicked() {
   checkClickOnMap();
   checkClickOnDataTypes();
+  checkClickOnCheckBox();
 }
 
 void draw() {
@@ -104,4 +106,5 @@ void draw() {
   }
 
   dataVisualization.drawCountryNamesWithColor();
+  drawCheckBox();
 }
