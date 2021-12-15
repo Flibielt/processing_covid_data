@@ -87,20 +87,24 @@ void draw() {
   textSize(12);
   drawTitleTabs();
   
-  for (String code : countries.keySet()) {
-    Country country = countries.get(code);
+  if (heatmap) {
+    drawCountryHeatMap();
+  } else {
+    for (String code : countries.keySet()) {
+      Country country = countries.get(code);
 
-    if (country.isMouseOver()) {
-      fill(200);
-      shape(country.getShape(), svgX, svgY);
-      fill(0);
-      text(country.getName(), mouseX, mouseY);
-    }
+      if (country.isMouseOver()) {
+        fill(200);
+        shape(country.getShape(), svgX, svgY);
+        fill(0);
+        text(country.getName(), mouseX, mouseY);
+      }
 
-    if (selectedCountries.contains(country.getAlphaCode3())) {
-      fill(country.getColor());
-      shape(country.getShape(), svgX, svgY);
-      fill(255);
+      if (selectedCountries.contains(country.getAlphaCode3())) {
+        fill(country.getColor());
+        shape(country.getShape(), svgX, svgY);
+        fill(255);
+      }
     }
   }
 
