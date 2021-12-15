@@ -3,12 +3,14 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.Collections;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.time.format.DateTimeFormatter;
 
 PShape map;
 Set<String> selectedCountries;
+List<CovidData> covidDataForDate;
 HashMap<String, Country> countries;
 HashMap<String, String> alpha2Alpha3;
 HashMap<String, String> alpha3Alpha2;
@@ -107,4 +109,5 @@ void draw() {
 
   dataVisualization.drawCountryNamesWithColor();
   drawCheckBox();
+  displayTop5();
 }

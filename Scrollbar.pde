@@ -15,6 +15,8 @@ class HScrollbar {
   int daysBetween;
 
   HScrollbar (float xp, float yp, int sw, int sh, int l) {
+    int plusDay;
+
     swidth = sw;
     sheight = sh;
     int widthtoheight = sw - sh;
@@ -28,6 +30,10 @@ class HScrollbar {
     loose = l;
 
     daysBetween = int(getDaysBetween(globalMinDate, globalMaxDate));
+
+    plusDay = int(map(spos, xpos, xpos + swidth, 0, daysBetween));
+    selectedDate = globalMinDate.plusDays(plusDay);
+    updateCovidData();
   }
 
   void update() {
@@ -49,10 +55,25 @@ class HScrollbar {
     }
     if (abs(newspos - spos) > 1) {
       spos = spos + (newspos-spos)/loose;
+      updateCovidData();
     }
 
     plusDay = int(map(spos, xpos, xpos + swidth, 0, daysBetween));
     selectedDate = globalMinDate.plusDays(plusDay);
+  }
+
+  void updateCovidData() {
+    covidDataForDate = Collections.emptyList();
+    covidDataForDate = new ArrayList();
+
+    for (String key : countryCovidData.keySet()) {
+      for (CovidData covidData : countryCovidData.get(key)) {
+        if (covidData.getDate().equals(selectedDate)) {
+          covidDataForDate.add(covidData);
+          break;
+        }
+      }
+    }
   }
 
   float constrain(float val, float minv, float maxv) {
