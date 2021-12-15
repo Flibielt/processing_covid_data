@@ -27,6 +27,10 @@ void drawCheckBox() {
         checkBoxText = "Enable heatmap";
     }
     text(checkBoxText, checkBoxX1 + checkBoxwidth + 10, checkBoxY1 + 17);
+
+    rectMode(CORNER);
+    textAlign(RIGHT);
+    text("Date: " + selectedDate, svgX + map.width, checkBoxY1 + 17);
 }
 
 void checkClickOnCheckBox() {
