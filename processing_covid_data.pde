@@ -10,6 +10,8 @@ import java.time.format.DateTimeFormatter;
 PShape map;
 Set<String> selectedCountries;
 HashMap<String, Country> countries;
+HashMap<String, String> alpha2Alpha3;
+HashMap<String, String> alpha3Alpha2;
 HashMap<String, List<CovidData>> countryCovidData;
 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 DataType[] dataTypes = {DataType.CASE_COUNT, DataType.DEATH_COUNT, DataType.TEST_COUNT};
@@ -39,6 +41,8 @@ void setup() {
   svgY = defaultDistance;
   globalMinDate = LocalDate.parse("3000-01-01", formatter);
   globalMaxDate = LocalDate.parse("2000-01-01", formatter);
+  alpha2Alpha3 = new HashMap();
+  alpha3Alpha2 = new HashMap();
   
   map = loadShape("countries_of_europe.svg");
   map.disableStyle();
@@ -99,4 +103,6 @@ void draw() {
 
     drawTitleTabs();
   }
+
+  dataVisualization.drawCountryNamesWithColor();
 }

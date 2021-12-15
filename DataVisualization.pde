@@ -75,6 +75,29 @@ class DataVisualization {
     }
   }
 
+  public void drawCountryNamesWithColor() {
+    float x, y;
+    x = plotX1;
+    y = plotY2 + 50;
+
+    for (String alpha3Code : countryCodes) {
+      String alpha2Code = alpha3Alpha2.get(alpha3Code);
+      String countryName;
+      color countryColor;
+
+      Country country = countries.get(alpha2Code);
+      countryName = country.getName();
+      countryColor = country.getColor();
+
+      fill(countryColor);
+      textSize(15);
+      textAlign(LEFT);
+
+      text(countryName, x, y);
+      x += textWidth(countryName) + 10;
+    }
+  }
+
   public void drawTimeLabel() {
     long daysBetween = getDaysBetween(dateMin, dateMax);
 

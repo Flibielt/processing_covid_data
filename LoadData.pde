@@ -51,6 +51,8 @@ void loadCountries() {
       if (shape != null) {
         Country country = new Country(row.getString("Country"), code, row.getString("Alpha-3_code"), shape);
         
+        alpha2Alpha3.put(code, row.getString("Alpha-3_code"));
+        alpha3Alpha2.put(row.getString("Alpha-3_code"), code);
         countries.put(code, country);
       }
   }
