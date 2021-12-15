@@ -31,7 +31,7 @@ int currentColumn = 0;
 float tabTop, tabBottom;
 float[] tabLeft, tabRight;
 float plotX1, plotX2, plotY1, plotY2;
-LocalDate globalMinDate, globalMaxDate;
+LocalDate globalMinDate, globalMaxDate, selectedDate;
 
 void setup() {
   fullScreen();

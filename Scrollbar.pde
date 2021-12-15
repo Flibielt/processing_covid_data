@@ -12,6 +12,7 @@ class HScrollbar {
   boolean over;           // is the mouse over the slider?
   boolean locked;
   float ratio;
+  int daysBetween;
 
   HScrollbar (float xp, float yp, int sw, int sh, int l) {
     swidth = sw;
@@ -25,9 +26,13 @@ class HScrollbar {
     sposMin = xpos;
     sposMax = xpos + swidth - sheight;
     loose = l;
+
+    daysBetween = int(getDaysBetween(globalMinDate, globalMaxDate));
   }
 
   void update() {
+    int plusDay;
+
     if (overEvent()) {
       over = true;
     } else {
@@ -45,6 +50,9 @@ class HScrollbar {
     if (abs(newspos - spos) > 1) {
       spos = spos + (newspos-spos)/loose;
     }
+
+    plusDay = int(map(spos, xpos, xpos + swidth, 0, daysBetween));
+    selectedDate = globalMinDate.plusDays(plusDay);
   }
 
   float constrain(float val, float minv, float maxv) {
