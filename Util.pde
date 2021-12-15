@@ -47,8 +47,8 @@ void drawTitleTabs() {
   }
   
   float runningX = plotX1; 
-  tabTop = plotY1 - textAscent() - 15;
-  tabBottom = plotY1;
+  tabTop = plotY1 - textAscent() - 30;
+  tabBottom = plotY1 - 15;
   
   for (int col = 0; col < dataTypes.length; col++) {
     String title = dataTypes[col].toString();
@@ -62,7 +62,7 @@ void drawTitleTabs() {
     
     // If the current tab, use black for the text, otherwise use dark gray
     fill(col == currentColumn ? 0 : 64);
-    text(title, runningX + tabPad, plotY1 - 10);
+    text(title, runningX + tabPad, plotY1 - 25);
     
     runningX = tabRight[col];
   }

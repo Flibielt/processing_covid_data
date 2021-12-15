@@ -78,6 +78,7 @@ void draw() {
   fill(255);
   shape(map, svgX, svgY);
   textSize(12);
+  drawTitleTabs();
   
   for (String code : countries.keySet()) {
     Country country = countries.get(code);
@@ -100,8 +101,6 @@ void draw() {
     dataVisualization.drawTimeLabel();
     dataVisualization.drawVolumeLabel();
     dataVisualization.drawDataCurve();
-
-    drawTitleTabs();
   }
 
   dataVisualization.drawCountryNamesWithColor();
