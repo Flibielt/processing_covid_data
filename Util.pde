@@ -1,3 +1,5 @@
+color[] baseColors = {color(255,0,0), color(0,255,0), color(0,0,255), color(0,100,0), color(0,255,255), color(255,0,255)};
+
 long getDaysBetween(LocalDate dateBefore, LocalDate dateAfter) {
   return ChronoUnit.DAYS.between(dateBefore, dateAfter);
 }
@@ -15,7 +17,11 @@ void checkClickOnMap() {
         } else {
           selectedCountries.add(country.getAlphaCode3());
           dataVisualization.addCountry(country.getAlphaCode3());
-          country.setColor(color(random(255), random(255), random(255)));
+          if (selectedCountries.size() > baseColors.length) {
+            country.setColor(color(random(255), random(255), random(255)));
+          } else {
+            country.setColor(baseColors[selectedCountries.size() - 1]);
+          }
         }
       }
     }
