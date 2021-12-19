@@ -90,7 +90,7 @@ class DataVisualization {
       countryColor = country.getColor();
 
       fill(countryColor);
-      textSize(15);
+      textSize(20);
       textAlign(LEFT);
 
       text(countryName, x, y);
