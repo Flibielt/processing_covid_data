@@ -54,10 +54,8 @@ void drawCountryHeatMap() {
     return;
   }
 
-  colorMode(HSB);
-
   for (CovidData covidData : covidDataForDate) {
-    float saturation = 0;
+    float red = 0;
     int data = 0;
     String countryCode;
 
@@ -69,12 +67,11 @@ void drawCountryHeatMap() {
       data = covidData.getTestCount();
     }
 
-    saturation = map(data, 0, maxDataForDate, 25, 100);
+    red = 255 - map(data, 0, maxDataForDate, 0, 175);
     if (alpha3Alpha2.containsKey(covidData.getCountryCode())) {
       countryCode = alpha3Alpha2.get(covidData.getCountryCode());
-      println(saturation);
       Country country = countries.get(countryCode);
-      fill(0, saturation, 100);
+      fill(red, 0, 0);
       shape(country.getShape(), svgX, svgY);
     }
   }
