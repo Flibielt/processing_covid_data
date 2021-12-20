@@ -1,4 +1,6 @@
 int maxDataForDate = 0;
+color endColor = color(255, 0, 0);
+color startColor = color(255);
 
 void displaytopCountries() {
   List<CovidData> topCountries = new ArrayList();
@@ -55,7 +57,7 @@ void drawCountryHeatMap() {
   }
 
   for (CovidData covidData : covidDataForDate) {
-    float red = 0;
+    float percentage = 0;
     int data = 0;
     String countryCode;
 
@@ -67,11 +69,13 @@ void drawCountryHeatMap() {
       data = covidData.getTestCount();
     }
 
-    red = 255 - map(data, 0, maxDataForDate, 0, 175);
+    percentage = map(data, 0, globalDataMax, 0, 100);
+    percentage = percentage / 100; 
+    color c = lerpColor(startColor, endColor, percentage);
     if (alpha3Alpha2.containsKey(covidData.getCountryCode())) {
       countryCode = alpha3Alpha2.get(covidData.getCountryCode());
       Country country = countries.get(countryCode);
-      fill(red, 0, 0);
+      fill(c);
       shape(country.getShape(), svgX, svgY);
     }
   }

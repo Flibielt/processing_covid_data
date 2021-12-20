@@ -19,6 +19,8 @@ HashMap<String, String> alpha3Alpha2;
 HashMap<String, List<CovidData>> countryCovidData;
 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 DataType[] dataTypes = {DataType.CASE_COUNT, DataType.DEATH_COUNT, DataType.TEST_COUNT};
+int globalDataMax;
+DataType globalDataType;
 
 // Visualizing the data
 DataVisualization dataVisualization;
@@ -66,6 +68,8 @@ void setup() {
   selectedCountries = new HashSet();
   dataVisualization = new DataVisualization(plotX1, plotY1, plotX2, plotY2);
   dataVisualization.setDataType(dataTypes[0]);
+  globalDataType = dataTypes[0];
+  findGlobalMaxData();
 
   hs1 = new HScrollbar(20, height - 100, int(map.width), 16, 1);
 }
@@ -89,6 +93,7 @@ void draw() {
   
   if (heatmap) {
     drawCountryHeatMap();
+    drawColorGamut(Math.round(svgX + 200), Math.round(svgY + map.height + 20), 300, 20);
   } else {
     for (String code : countries.keySet()) {
       Country country = countries.get(code);

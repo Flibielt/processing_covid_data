@@ -34,7 +34,9 @@ void checkClickOnDataTypes() {
       if (mouseX > tabLeft[col] && mouseX < tabRight[col]) {
         currentColumn = col;
         dataVisualization.setDataType(dataTypes[currentColumn]);
+        globalDataType = dataTypes[currentColumn];
         dataType = dataTypes[currentColumn];
+        findGlobalMaxData();
       }
     }
   }
@@ -72,5 +74,34 @@ void drawTitleTabs() {
     text(title, runningX + tabPad, plotY1 - 25);
     
     runningX = tabRight[col];
+  }
+}
+
+void findGlobalMaxData() {
+  List<CovidData> covidDataList = new ArrayList();
+  globalDataMax = 0;
+
+  for (String key : countryCovidData.keySet()) {
+    covidDataList.addAll(countryCovidData.get(key));
+  }
+
+  if (covidDataList == null) {
+    return;
+  }
+
+  for (CovidData covidData : covidDataList) {
+    if (globalDataType == DataType.CASE_COUNT) {
+      if (globalDataMax < covidData.getCaseCount()) {
+        globalDataMax = covidData.getCaseCount();
+      }
+    } else if (globalDataType == DataType.DEATH_COUNT) {
+      if (globalDataMax < covidData.getDeathCount()) {
+        globalDataMax = covidData.getDeathCount();
+      }
+    } else if (globalDataType == DataType.TEST_COUNT) {
+      if (globalDataMax < covidData.getTestCount()) {
+        globalDataMax = covidData.getTestCount();
+      }
+    }
   }
 }
